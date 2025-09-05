@@ -1,0 +1,162 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-body [nbSpinner]="showProgress" nbSpinnerStatus="danger">
+                <form (ngSubmit)="saveProfile()" #form="ngForm">
+                    <div *ngIf="!editId" class="row">
+                        <div class="col-md-12">
+                            <nb-card>
+                                <nb-card-header>{{ 'PROFILE.FIELDS.USER.HEADER' | translate }}</nb-card-header>
+                                <nb-card-body>
+                                    <div class="form-group">
+                                        <label>{{ 'USER.NAME.LABEL' | translate }}</label>
+                                        <input type="text" nbInput fullWidth placeholder="Name" name="name"
+                                            [(ngModel)]="profileRequest.name" #name=ngModel required>
+                                        <label [hidden]="name.valid || name.pristine" class="error text-danger">
+                                            {{ 'USER.NAME.VALIDATION' | translate }}
+                                        </label>
+                                        <label class="error text-danger"
+                                            *ngFor="let error of profileError.email">{{error}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'USER.EMAIL.LABEL' | translate }}</label>
+                                        <input type="email" nbInput fullWidth placeholder="Email" name="email"
+                                            [(ngModel)]="profileRequest.email" #email=ngModel required>
+                                        <label [hidden]="email.valid || email.pristine" class="error text-danger">
+                                            {{ 'USER.EMAIL.VALIDATION' | translate }}
+                                        </label>
+                                        <label class="error text-danger"
+                                            *ngFor="let error of profileError.email">{{error}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'USER.MOBILE_NUMBER.LABEL' | translate }}</label>
+                                        <input type="mobile_number" nbInput fullWidth placeholder="Mobile Number"
+                                            name="mobile_number" [(ngModel)]="profileRequest.mobile_number"
+                                            #mobile_number=ngModel required>
+                                        <label [hidden]="mobile_number.valid || mobile_number.pristine"
+                                            class="error text-danger">
+                                            {{ 'USER.MOBILE_NUMBER.VALIDATION' | translate }}
+                                        </label>
+                                        <label class="error text-danger"
+                                            *ngFor="let error of profileError.mobile_number">{{error}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'USER.PASSWORD.LABEL' | translate }}</label>
+                                        <input type="password" nbInput fullWidth id="password" placeholder="Password"
+                                            name="password" [(ngModel)]="profileRequest.password" #password=ngModel
+                                            [required]="!isEdit">
+                                        <label [hidden]="password.valid || password.pristine" class="error text-danger">
+                                            {{ 'USER.PASSWORD.VALIDATION' | translate }}
+                                        </label>
+                                        <label class="error text-danger"
+                                            *ngFor="let error of profileError.password">{{error}}</label>
+                                    </div>
+                                </nb-card-body>
+                            </nb-card>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>{{ 'PROFILE.IS_VERIFIED.LABEL' | translate }}</label>
+                        <nb-checkbox class="form-control" name="is_verified" nbInput fullWidth
+                            [checked]="profileRequest.is_verified" (change)="onIsVerifiedChange($event.target.checked)">
+                            {{ 'PROFILE.IS_VERIFIED.LABEL' | translate }}?</nb-checkbox>
+                        <!-- <div *ngIf="profileRequest.meta?.documents?.national_id">
+                            <a [href]="profileRequest.meta?.documents?.national_id" target="_blank">{{ profileRequest.meta?.documents?.national_id }}</a>
+                        </div>
+                        <div *ngIf="profileRequest.meta?.documents?.profile_licence">
+                            <a [href]="profileRequest.meta?.documents?.profile_licence" target="_blank">{{ profileRequest.meta?.documents?.profile_licence }}</a>
+                        </div>
+                        <div *ngIf="profileRequest.meta?.documents?.medical_council_reg">
+                            <a [href]="profileRequest.meta?.documents?.medical_council_reg" target="_blank">{{ profileRequest.meta?.documents?.medical_council_reg }}</a>
+                        </div> -->
+                        <label class="error text-danger"
+                            *ngFor="let error of profileError.is_verified">{{error}}</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nb-card>
+                                <nb-card-header>{{ 'PROFILE.FIELDS.VEHICLE_DETAILS.HEADER' | translate }}
+                                </nb-card-header>
+                                <nb-card-body>
+                                    <div class="form-group">
+                                        <label>{{ 'PROFILE.FIELDS.VEHICLE_DETAILS.TYPE.LABEL' | translate }}</label>
+                                        <input type="text" nbInput fullWidth placeholder="Vehicle Type"
+                                            name="vehicle_details_type"
+                                            [(ngModel)]="profileRequest.vehicle_details.type"
+                                            #vehicle_details_type=ngModel required>
+                                        <label [hidden]="vehicle_details_type.valid || vehicle_details_type.pristine"
+                                            class="error text-danger">
+                                            {{ 'PROFILE.FIELDS.VEHICLE_DETAILS.TYPE.VALIDATION' | translate }}
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'PROFILE.FIELDS.VEHICLE_DETAILS.NAME.LABEL' | translate }}</label>
+                                        <input type="text" nbInput fullWidth placeholder="Vehicle Name"
+                                            name="vehicle_details_name"
+                                            [(ngModel)]="profileRequest.vehicle_details.name"
+                                            #vehicle_details_name=ngModel required>
+                                        <label [hidden]="vehicle_details_name.valid || vehicle_details_name.pristine"
+                                            class="error text-danger">
+                                            {{ 'PROFILE.FIELDS.VEHICLE_DETAILS.NAME.VALIDATION' | translate }}
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'PROFILE.FIELDS.VEHICLE_DETAILS.REG_NUMBER.LABEL' | translate
+                                            }}</label>
+                                        <input type="text" nbInput fullWidth placeholder="Vehicle Reg. Number"
+                                            name="vehicle_details_reg_number"
+                                            [(ngModel)]="profileRequest.vehicle_details.reg_number"
+                                            #vehicle_details_reg_number=ngModel required>
+                                        <label
+                                            [hidden]="vehicle_details_reg_number.valid || vehicle_details_reg_number.pristine"
+                                            class="error text-danger">
+                                            {{ 'PROFILE.FIELDS.VEHICLE_DETAILS.REG_NUMBER.VALIDATION' | translate }}
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'PROFILE.FIELDS.VEHICLE_DETAILS.FACILITIES.LABEL' | translate
+                                            }}</label>
+                                        <input type="text" nbInput fullWidth placeholder="Vehicle Facilities"
+                                            name="vehicle_details_facilities"
+                                            [(ngModel)]="profileRequest.vehicle_details.facilities"
+                                            #vehicle_details_facilities=ngModel required>
+                                        <label
+                                            [hidden]="vehicle_details_facilities.valid || vehicle_details_facilities.pristine"
+                                            class="error text-danger">
+                                            {{ 'PROFILE.FIELDS.VEHICLE_DETAILS.FACILITIES.VALIDATION' | translate }}
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'PROFILE.FIELDS.VEHICLE_DETAILS.INSTRUCTIONS.LABEL' | translate
+                                            }}</label>
+                                        <input type="text" nbInput fullWidth placeholder="Vehicle Instructions"
+                                            name="vehicle_details_instructions"
+                                            [(ngModel)]="profileRequest.vehicle_details.instructions"
+                                            #vehicle_details_instructions=ngModel required>
+                                        <label
+                                            [hidden]="vehicle_details_instructions.valid || vehicle_details_instructions.pristine"
+                                            class="error text-danger">
+                                            {{ 'PROFILE.FIELDS.VEHICLE_DETAILS.INSTRUCTIONS.VALIDATION' | translate }}
+                                        </label>
+                                    </div>
+                                </nb-card-body>
+                            </nb-card>
+                        </div>
+                    </div>
+
+                    <ngx-metaeditor [(meta)]="profileRequest.meta"></ngx-metaeditor>
+
+                    <button type="submit" [disabled]="!form.form.valid || showProgressButton" nbButton status="success"
+                        size="medium" [nbSpinner]="showProgressButton" nbSpinnerStatus="success" nbSpinnerSize="small">
+                        {{ 'COMMON.SAVE' | translate }}
+                    </button>
+                    &nbsp;
+                    <button type="button" nbButton status="danger" size="medium" (click)="back()">
+                        {{ 'COMMON.BACK' | translate }}
+                    </button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

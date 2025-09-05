@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-body [nbSpinner]="showProgress" nbSpinnerStatus="danger">
+                <form (ngSubmit)="saveTransaction()" #form="ngForm">
+                    <div class="form-group">
+                        <label>{{ 'PAYOUTS.FIELDS.USER.LABEL' | translate }}</label>
+                        <input type="text" nbInput fullWidth readonly [value]="transaction?.user?.email">
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'PAYOUTS.FIELDS.AMOUNT.LABEL' | translate }}</label>
+                        <input type="text" nbInput fullWidth readonly [value]="transaction?.amount">
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'PAYOUTS.FIELDS.BANK_NAME.LABEL' | translate }}</label>
+                        <input type="text" nbInput fullWidth readonly [value]="transaction?.meta?.bank_name">
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'PAYOUTS.FIELDS.BANK_ACCOUNT_NAME.LABEL' | translate }}</label>
+                        <input type="text" nbInput fullWidth readonly [value]="transaction?.meta?.bank_account_name">
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'PAYOUTS.FIELDS.BANK_ACCOUNT_NUMBER.LABEL' | translate }}</label>
+                        <input type="text" nbInput fullWidth readonly [value]="transaction?.meta?.bank_account_number">
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'PAYOUTS.FIELDS.BANK_CODE.LABEL' | translate }}</label>
+                        <input type="text" nbInput fullWidth readonly [value]="transaction?.meta?.bank_code">
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'PAYOUTS.FIELDS.IS_PAID.LABEL' | translate }}</label>
+                        <nb-checkbox class="form-control" name="is_paid" nbInput fullWidth [checked]="transactionRequest.is_paid" (change)="onIsPaidChange($event.target.checked)">{{ 'PAYOUTS.FIELDS.IS_PAID.LABEL' | translate }}?</nb-checkbox>
+                    </div>   
+                    <button type="submit" [disabled]="!form.form.valid || showProgressButton" nbButton status="success" size="medium" 
+                    [nbSpinner]="showProgressButton" nbSpinnerStatus="success" nbSpinnerSize="small">
+                    {{ 'COMMON.SAVE' | translate }}
+                    </button>                   
+                    &nbsp;                                
+                    <button type="button" nbButton status="danger" size="medium" (click)="back()">
+                        {{ 'COMMON.BACK' | translate }}
+                    </button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

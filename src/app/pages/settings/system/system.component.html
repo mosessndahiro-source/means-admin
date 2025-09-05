@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>{{ 'SETTINGS.LABELS.ENV' | translate }}</nb-card-header>
+      <nb-card-body>
+        <form (ngSubmit)="updateEnv()">
+          <div class="row">
+            <div class="col-md-12">
+              <nb-card>
+                <nb-card-header>{{ 'SETTINGS.APP_CONFIG.LABEL' | translate }}</nb-card-header>
+                <nb-card-body>
+                  <div class="form-group">
+                    <label>{{ 'SETTINGS.APP_CONFIG.TIMEZONE.LABEL' | translate }}</label>
+                    <nb-select fullWidth name="app_timezone" id="app_timezone" [(ngModel)]="env.APP_TIMEZONE"
+                      name="app_timezone">
+                      <nb-option *ngFor="let timezone of timezoneList" [value]="timezone">{{ timezone }}</nb-option>
+                    </nb-select>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <nb-card>
+                <nb-card-header>{{ 'SETTINGS.EMAIL_SETTINGS.LABEL' | translate }}</nb-card-header>
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>{{ 'SETTINGS.EMAIL_SETTINGS.MAIL_FROM_ADDRESS.LABEL' | translate }}</label>
+                        <input nbInput fullWidth [(ngModel)]="env.MAIL_FROM_ADDRESS" name="MAIL_FROM_ADDRESS" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>{{ 'SETTINGS.EMAIL_SETTINGS.MAIL_FROM_NAME.LABEL' | translate }}</label>
+                        <input nbInput fullWidth [(ngModel)]="env.MAIL_FROM_NAME" name="MAIL_FROM_NAME" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>{{ 'SETTINGS.EMAIL_SETTINGS.MAIL_DRIVER.LABEL' | translate }}</label>
+                    <nb-select fullWidth name="status" id="status" [(ngModel)]="env.MAIL_DRIVER"
+                      name="mail_driver">
+                      <nb-option *ngFor="let driver of mailDriverList" [value]="driver">{{ driver }}</nb-option>
+                    </nb-select>
+                  </div>
+                  <div *ngIf="env.MAIL_DRIVER=='mailgun'">
+                    <div class="form-group">
+                      <label>{{ 'SETTINGS.EMAIL_SETTINGS.MAILGUN_DOMAIN.LABEL' | translate }}</label>
+                      <input nbInput fullWidth [(ngModel)]="env.MAILGUN_DOMAIN" name="mailgun_domain" />
+                    </div>
+                    <div class="form-group">
+                      <label>{{ 'SETTINGS.EMAIL_SETTINGS.MAILGUN_SECRET.LABEL' | translate }}</label>
+                      <input nbInput fullWidth [(ngModel)]="env.MAILGUN_SECRET" name="mailgun_secret" />
+                    </div>
+                  </div>
+                  <div *ngIf="env.MAIL_DRIVER=='ses'">
+                    <div class="form-group">
+                      <label>{{ 'SETTINGS.EMAIL_SETTINGS.SES_KEY.LABEL' | translate }}</label>
+                      <input nbInput fullWidth [(ngModel)]="env.SES_KEY" name="SES_KEY" />
+                    </div>
+                    <div class="form-group">
+                      <label>{{ 'SETTINGS.EMAIL_SETTINGS.SES_SECRET.LABEL' | translate }}</label>
+                      <input nbInput fullWidth [(ngModel)]="env.SES_SECRET" name="SES_SECRET" />
+                    </div>
+                  </div>
+                  <div *ngIf="env.MAIL_DRIVER=='smtp'">
+                    <div class="form-group">
+                      <label>{{ 'SETTINGS.EMAIL_SETTINGS.HOST.LABEL' | translate }}</label>
+                      <input nbInput fullWidth [(ngModel)]="env.MAIL_HOST" name="mail_host" />
+                    </div>
+                    <div class="form-group">
+                      <label>{{ 'SETTINGS.EMAIL_SETTINGS.PORT.LABEL' | translate }}</label>
+                      <input nbInput fullWidth [(ngModel)]="env.MAIL_PORT" name="mail_port" />
+                    </div>
+                    <div class="form-group">
+                      <label>{{ 'SETTINGS.EMAIL_SETTINGS.USERNAME.LABEL' | translate }}</label>
+                      <input nbInput fullWidth [(ngModel)]="env.MAIL_USERNAME" name="mail_username" />
+                    </div>
+                    <div class="form-group">
+                      <label>{{ 'SETTINGS.EMAIL_SETTINGS.PASSWORD.LABEL' | translate }}</label>
+                      <input nbInput fullWidth [(ngModel)]="env.MAIL_PASSWORD" name="mail_password" />
+                    </div>
+                    <div class="form-group">
+                      <label>{{ 'SETTINGS.EMAIL_SETTINGS.ENCRYPTION.LABEL' | translate }}</label>
+                      <input nbInput fullWidth [(ngModel)]="env.MAIL_ENCRYPTION" name="mail_encryption" />
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+            <div class="col-md-12">
+              <nb-card>
+                <nb-card-header>{{ 'SETTINGS.PUSH_NOTIFICATIONS.LABEL' | translate }}</nb-card-header>
+                <nb-card-body>
+                  <div class="form-group">
+                    <label>{{ 'SETTINGS.EMAIL_SETTINGS.ONESIGNAL_APP_ID_CUSTOMER.LABEL' | translate }}</label>
+                    <input nbInput fullWidth [(ngModel)]="env.ONESIGNAL_APP_ID_CUSTOMER"
+                      name="ONESIGNAL_APP_ID_CUSTOMER" />
+                  </div>
+                  <div class="form-group">
+                    <label>{{ 'SETTINGS.EMAIL_SETTINGS.ONESIGNAL_REST_API_CUSTOMER.LABEL' | translate }}</label>
+                    <input nbInput fullWidth [(ngModel)]="env.ONESIGNAL_REST_API_CUSTOMER"
+                      name="ONESIGNAL_REST_API_CUSTOMER" />
+                  </div>
+                  <div class="form-group">
+                    <label>{{ 'SETTINGS.EMAIL_SETTINGS.ONESIGNAL_APP_ID_VENDOR.LABEL' | translate }}</label>
+                    <input nbInput fullWidth [(ngModel)]="env.ONESIGNAL_APP_ID_VENDOR"
+                      name="ONESIGNAL_APP_ID_VENDOR" />
+                  </div>
+                  <div class="form-group">
+                    <label>{{ 'SETTINGS.EMAIL_SETTINGS.ONESIGNAL_REST_API_VENDOR.LABEL' | translate }}</label>
+                    <input nbInput fullWidth [(ngModel)]="env.ONESIGNAL_REST_API_VENDOR"
+                      name="ONESIGNAL_REST_API_VENDOR" />
+                  </div>
+                  <div class="form-group">
+                    <label>{{ 'SETTINGS.EMAIL_SETTINGS.ONESIGNAL_APP_ID_DRIVER.LABEL' | translate }}</label>
+                    <input nbInput fullWidth [(ngModel)]="env.ONESIGNAL_APP_ID_DRIVER"
+                      name="ONESIGNAL_APP_ID_DRIVER" />
+                  </div>
+                  <div class="form-group">
+                    <label>{{ 'SETTINGS.EMAIL_SETTINGS.ONESIGNAL_REST_API_DRIVER.LABEL' | translate }}</label>
+                    <input nbInput fullWidth [(ngModel)]="env.ONESIGNAL_REST_API_DRIVER"
+                      name="ONESIGNAL_REST_API_DRIVER" />
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+          <button type="submit" nbButton status="success" size="medium" [nbSpinner]="showProgressButton"
+            nbSpinnerStatus="primary" nbSpinnerSize="success">
+            {{ 'COMMON.SAVE' | translate }}
+          </button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+{
+    "appName": "Means",
+    "apiBaseUrl": "https://means-backend-5.onrender.com/api/admin",
+    "mapsApiKey": "",
+    "developerName": "Quill Innovations",
+    "developerUrl": "http://Quill.africa/",
+    "defaultCategoryScope": "ecommerce",
+    "defaultBannerScope": "ecommerce"
+}
